@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1f1f1f;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .dashboard {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 400px;
+        }
+
+        .widget {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #007bff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding: 10px 0;
+        }
+
+        .image-container {
+            max-width: 60px;
+            margin-right: 10px;
+            border: 1px solid #333;
+            padding: 3px;
+        }
+
+        .delete-button {
+            color: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="widget">
+            <h2>Add New Item</h2>
+            <label for="dataInput">Data:</label>
+            <input type="text" id="dataInput" placeholder="Enter data">
+            <label for="imageInput">Image:</label>
+            <input type="file" id="imageInput" accept="image/*" onchange="previewImage()">
+            <button onclick="addItem()">Add</button>
+        </div>
+        <div class="widget">
+            <h2>Items List</h2>
+            <ul id="itemList"></ul>
+        </div>
+    </div>
+
+    <script>
+        function addItem() {
+            const dataInput = document.getElementById('dataInput');
+            const data = dataInput.value;
+            const imageInput = document.getElementById('imageInput');
+            const image = imageInput.files[0];
+
+            if (data) {
+                const itemList = document.getElementById('itemList');
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <div class="image-container">
+                        ${image ? `<img src="${URL.createObjectURL(image)}" alt="Image" width="50">` : ''}
+                    </div>
+                    <div>${data}</div>
+                    <span class="delete-button" onclick="deleteItem(this)">Delete</span>
+                `;
+                itemList.appendChild(listItem);
+
+                // Clear input fields
+                dataInput.value = '';
+                imageInput.value = '';
+            }
+        }
+
+        function deleteItem(button) {
+            const listItem = button.parentElement;
+            listItem.remove();
+        }
+
+        function previewImage() {
+            const imageInput = document.getElementById('imageInput');
+            const imagePreview = document.getElementById('imagePreview');
+
+            if (imageInput.files.length > 0) {
+                const image = imageInput.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(image);
+            }
+        }
+    </script>
+</body>
+</html>
