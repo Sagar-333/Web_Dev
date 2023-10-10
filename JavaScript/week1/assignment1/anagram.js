@@ -7,7 +7,7 @@ function isAnagram(a, b) {
         return false;
     }
     let str1 = a.split('').sort().join('');
-   let str2 = b.split('').sort().join('');
+    let str2 = b.split('').sort().join('');
    for (let i = 0; i < str1.length; i++) {
     if (str1[i] != str2[i]) {
         return false
