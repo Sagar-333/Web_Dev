@@ -1,8 +1,8 @@
 function isPalindrome(a) {
     for (let i = 0; i < (a.length)/2; i++) {
         var start = i;
-        var end = (a.length);
-        if (start!=end) {
+        var end = (a.length)-1-i;
+        if (a[start]!=a[end]) {
             return false;
         }
     }
