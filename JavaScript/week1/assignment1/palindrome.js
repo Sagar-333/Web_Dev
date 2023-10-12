@@ -9,4 +9,4 @@ function isPalindrome(a) {
     return true;
 }
 var str1 = "abccba";
-console.log(isPalindrome(str1));
+console.log(isPalindrome(str1))
